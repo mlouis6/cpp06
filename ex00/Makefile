@@ -6,7 +6,7 @@
 #    By: mlouis <mlouis@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/10 17:03:19 by mlouis            #+#    #+#              #
-#    Updated: 2026/02/10 17:04:27 by mlouis           ###   ########.fr        #
+#    Updated: 2026/02/11 11:03:23 by mlouis           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,19 +18,15 @@ CL_DIR := class/
 SRCS_DIR := src/
 OBJS_DIR := .build/
 
-BUREAUCRAT_DIR := $(addprefix $(CL_DIR), bureaucrat/)
-BUREAUCRAT_CL := Bureaucrat.cpp Intern.cpp
+SCALAR_DIR := $(addprefix $(CL_DIR), scalar/)
+SCALAR_CL := ScalarConverter.cpp
 
-FORM_DIR := $(addprefix $(CL_DIR), form/)
-FORM_CL := AForm.cpp ShrubberyCreationForm.cpp RobotomyRequestForm.cpp PresidentialPardonForm.cpp
-
-P_BUREAUCRAT := $(addprefix $(BUREAUCRAT_DIR), $(BUREAUCRAT_CL))
-P_FORM := $(addprefix $(FORM_DIR), $(FORM_CL))
+P_SCALAR := $(addprefix $(SCALAR_DIR), $(SCALAR_CL))
 
 P_MAIN := $(addprefix $(SRCS_DIR), main.cpp)
 
-SRCS := $(P_BUREAUCRAT) $(P_FORM) $(P_MAIN)
-INCS := $(BUREAUCRAT_DIR) $(FORM_DIR)
+SRCS := $(P_SCALAR) $(P_FORM) $(P_MAIN)
+INCS := $(SCALAR_DIR) $(FORM_DIR)
 OBJS := $(addprefix $(OBJS_DIR), $(SRCS:%.cpp=%.o))
 DEPS := $(addprefix $(OBJS_DIR), $(OBJS:.o=.d))
 
