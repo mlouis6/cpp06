@@ -12,6 +12,9 @@
 
 #include "ScalarConverter.hpp"
 #include <iostream>
+#include <sstream>
+#include <limits>
+#include <cmath>
 
 namespace utils
 {
@@ -103,9 +106,6 @@ static	e_type	getType(const std::string& str)
 	return (ERROR_TYPE);
 }
 
-#include <sstream>
-#include <limits>
-#include <cmath>
 
 namespace check
 {
@@ -153,7 +153,7 @@ namespace print
 
 	}
 
-	void	fromInt(const long val, std::istringstream& iss)
+	void	fromInt(const long long val, std::istringstream& iss)
 	{
 		std::cout << "char: ";
 		check::forChar(val);
