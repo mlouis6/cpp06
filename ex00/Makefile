@@ -25,8 +25,8 @@ P_SCALAR := $(addprefix $(SCALAR_DIR), $(SCALAR_CL))
 
 P_MAIN := $(addprefix $(SRCS_DIR), main.cpp)
 
-SRCS := $(P_SCALAR) $(P_FORM) $(P_MAIN)
-INCS := $(SCALAR_DIR) $(FORM_DIR)
+SRCS := $(P_SCALAR) $(P_MAIN)
+INCS := $(SCALAR_DIR)
 OBJS := $(addprefix $(OBJS_DIR), $(SRCS:%.cpp=%.o))
 DEPS := $(addprefix $(OBJS_DIR), $(OBJS:.o=.d))
 
