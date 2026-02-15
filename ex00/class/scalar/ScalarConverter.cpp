@@ -50,17 +50,14 @@ namespace utils
 	}
 }
 
-enum e_type { NONE = 0, CHAR, INT, FLOAT, DOUBLE, ERROR };
+enum e_type { CHAR = 0, INT, FLOAT, DOUBLE, ERROR_NONPRINT, ERROR_TYPE };
 
 static	e_type	getType(const std::string& str)
 {
 	if (!str[0])
-		return (NONE);
+		return (ERROR_TYPE);
 	if (!utils::allPrintable(str))
-	{
-		std::cout << "Error\nNon-printable characters shouldn't be used" << std::endl;
-		return (ERROR);
-	}
+		return (ERROR_NONPRINT);
 
 	int i = 0;
 	if (isdigit(str[0]) || str[0] == '+' || str[0] == '-')
@@ -103,70 +100,191 @@ static	e_type	getType(const std::string& str)
 	if (str == "+inf" || str == "-inf" || str == "nan")
 		return (DOUBLE);
 	
-	return (NONE);
+	return (ERROR_TYPE);
 }
+
 #include <sstream>
-static void	convertInt(const std::string& str)
-{
-	std::istringstream iss(str);
-	int iVal = 0;
-	iss >> iVal;
-	std::string cmp = static_cast<std::ostringstream&>(std::ostringstream() << std::dec << iVal).str();
-	if (str == cmp)
-		std::cout << "int= " << iVal << std::endl;
-	else
-		std::cout << "int= overflow" << std::endl;
-}
 #include <limits>
-static void	convertFloat(const std::string& str)
+#include <cmath>
+
+namespace check
 {
-	std::istringstream iss(str);
-	float fVal = 0.0f;
-	iss >> fVal;
-	// std::string cmp = static_cast<std::ostringstream&>(std::ostringstream() << std::dec << fVal).str();
-	if (fVal + std::numeric_limits<float>::epsilon() >= fVal)
-		std::cout << "float= " << fVal << std::endl;
-	else
-		std::cout << "float= +inff" << std::endl;
+	void	forChar(const int val)
+	{
+		if (val < 0 || val > 128)
+			std::cout << "impossible" << std::endl;
+		else if (std::isprint(val))
+			std::cout << "'" << static_cast<char>(val) << "'" << std::endl;
+		else
+			std::cout << "Non displayable" << std::endl;
+	}
+
+	void	forInt(const double val)
+	{
+		if (std::isnan(val) || std::isinf(val) ||
+			val > std::numeric_limits<int>::max() || val < std::numeric_limits<int>::min())
+			std::cout << "impossible" << std::endl;
+		else
+			std::cout << static_cast<int>(val) << std::endl;
+	}
+
+	void	forFloat(const double val)
+	{
+		if (std::isnan(val))
+			std::cout << "nan"; 
+		else if ((std::isinf(val) && val >= 0) || val > std::numeric_limits<float>::max())
+			std::cout << "+inf";
+		else if ((std::isinf(val) && val < 0) || val < std::numeric_limits<float>::min())
+			std::cout << "-inf";
+		else
+			std::cout << static_cast<float>(val);
+		std::cout << "f" << std::endl;
+	}
 }
 
-static void	convertDouble(const std::string& str)
+namespace print
 {
-	std::istringstream iss(str);
-	double dVal = 0.0;
-	iss >> dVal;
-	std::cout << "double= " << dVal << std::endl;
+	void	fromChar(const char val)
+	{
+		std::cout << "char: '" << val << "'" << std::endl;
+		std::cout << "int: " << static_cast<int>(val) << std::endl;
+		std::cout << "float: " << static_cast<float>(val) << ".0f" << std::endl;
+		std::cout << "double: " << static_cast<double>(val) << ".0" << std::endl;
+
+	}
+
+	void	fromInt(const long val, std::istringstream& iss)
+	{
+		std::cout << "char: ";
+		check::forChar(val);
+		if (iss.fail() || !iss.eof())
+			std::cout << "int: impossible" << std::endl;
+		else
+			std::cout << "int: " << val << std::endl;
+		std::cout << "float: " << static_cast<float>(val) << ".0f" << std::endl;
+		std::cout << "double: " << static_cast<double>(val) << ".0" << std::endl;
+	}
+
+	void	fromFloat(const float val, std::istringstream& iss)
+	{
+		std::cout << "char: ";
+		check::forChar(val);
+		
+		std::cout << "int: " << static_cast<int>(val)<< std::endl;
+
+		if (std::isnan(val))
+			std::cout << "nanf" << std::endl;
+		else if (val >= 0 && (std::isinf(val) || (iss.fail())))
+				std::cout << "float: +inff" << std::endl;
+		else if (val < 0 && (std::isinf(val) || (iss.fail())))
+				std::cout << "float: -inff" << std::endl;
+		else
+			std::cout << "float: " << val << "f"  << std::endl;
+
+		std::cout << "double: " << static_cast<double>(val) << std::endl;
+	}
+
+	void	fromDouble(const double val, std::istringstream& iss)
+	{
+		std::cout << "char: ";
+		check::forChar(val);
+
+		std::cout << "int: ";
+		check::forInt(val);
+		
+		std::cout << "float: ";
+		check::forFloat(val);
+
+		if (std::isnan(val))
+			std::cout << "double: nan" << std::endl;
+		else if (val >= 0 && (std::isinf(val) || (iss.fail())))
+			std::cout << "double: +inf" << std::endl;
+		else if (val < 0 && (std::isinf(val) || (iss.fail())))
+			std::cout << "double: -inf" << std::endl;
+		else
+			std::cout << "double: " << val << std::endl;
+	}
+
+	void	fromError(e_type type)
+	{
+		if (type == ERROR_TYPE)
+			std::cout << "Error\nAccepted types are CHAR, INT, FLOAT, DOUBLE" << std::endl;
+		else if (type == ERROR_NONPRINT)
+			std::cout << "Error\nNon-printable characters shouldn't be used" << std::endl;
+	}
 }
 
+
+namespace convertStr
+{
+	char	toChar(const std::string& str)
+	{
+		char val = str[0];
+		return (val);
+	}
+
+	int	toInt(const std::string& str, std::istringstream& iss)
+	{
+		iss.str(str);
+		int val = 0;
+		iss >> val;
+		return (val);
+	}
+
+	float	toFloat(const std::string& str, std::istringstream& iss)
+	{
+		if (str == "nan" || str == "nanf")
+			return (0.0 / 0.0);
+		else if (str == "+inf" || str == "+inff")
+			return (1.0 / 0.0);
+		else if (str == "-inf" || str == "-inff")
+			return (-1.0 / 0.0);
+		std::string tmp = str;
+		tmp.erase(tmp.length() - 1);
+		iss.str(tmp);
+		float val = 0.0f;
+		iss >> val;
+		return (val);
+	}
+
+	double	toDouble(const std::string& str, std::istringstream& iss)
+	{
+		if (str == "nan" || str == "nanf")
+			return (0.0 / 0.0);
+		else if (str == "+inf" || str == "+inff")
+			return (1.0 / 0.0);
+		else if (str == "-inf" || str == "-inff")
+			return (-1.0 / 0.0);
+		iss.str(str);
+		double val = 0.0;
+		iss >> val;
+		return (val);
+	}
+}
 
 void	ScalarConverter::convert(const std::string& str)
 {
 	e_type type = getType(str);
+	std::istringstream iss;
 
-	std::cout << "type= ";
 	switch (type)
 	{
-		case NONE:
-			std::cout << "none";
-			break ;
 		case CHAR:
-			std::cout << "char";
+			print::fromChar(convertStr::toChar(str));
 			break ;
 		case INT:
-			std::cout << "int";
-			convertInt(str);
+			print::fromInt(convertStr::toInt(str, iss), iss);
 			break ;
 		case FLOAT:
-			std::cout << "float";
-			convertFloat(str);
+			print::fromFloat(convertStr::toFloat(str, iss), iss);
 			break ;
 		case DOUBLE:
-			std::cout << "double";
-			convertDouble(str);
+			print::fromDouble(convertStr::toDouble(str, iss), iss);
 			break ;
-		case ERROR:
-			std::cout << "error";
+		case ERROR_NONPRINT:
+			print::fromError(type);
 			break ;
+		case ERROR_TYPE:
+			print::fromError(type);
 	}
-	std::cout << std::endl;
 }
