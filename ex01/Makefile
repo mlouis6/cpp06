@@ -9,16 +9,12 @@ OBJS_DIR := .build/
 SERIAL_DIR := $(addprefix $(CL_DIR), serializer/)
 SERIAL_CL := Serializer.cpp
 
-DATA_DIR := $(addprefix $(CL_DIR), data/)
-DATA_CL := Data.cpp
-
 P_SERIAL := $(addprefix $(SERIAL_DIR), $(SERIAL_CL))
-P_DATA := $(addprefix $(DATA_DIR), $(DATA_CL))
 
 P_MAIN := $(addprefix $(SRCS_DIR), main.cpp)
 
-SRCS := $(P_SERIAL) $(P_DATA) $(P_MAIN)
-INCS := $(SERIAL_DIR) $(DATA_DIR)
+SRCS := $(P_SERIAL) $(P_MAIN)
+INCS := $(SERIAL_DIR)
 OBJS := $(addprefix $(OBJS_DIR), $(SRCS:%.cpp=%.o))
 DEPS := $(addprefix $(OBJS_DIR), $(OBJS:.o=.d))
 
