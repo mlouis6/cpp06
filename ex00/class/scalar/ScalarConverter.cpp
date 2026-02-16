@@ -57,7 +57,7 @@ enum e_type { CHAR = 0, INT, FLOAT, DOUBLE, ERROR_NONPRINT, ERROR_TYPE };
 
 static	e_type	getType(const std::string& str)
 {
-	if (!str[0])
+	if (str.empty())
 		return (ERROR_TYPE);
 	if (!utils::allPrintable(str))
 		return (ERROR_NONPRINT);
@@ -134,7 +134,7 @@ namespace check
 			std::cout << "nan"; 
 		else if ((std::isinf(val) && val >= 0) || val > std::numeric_limits<float>::max())
 			std::cout << "+inf";
-		else if ((std::isinf(val) && val < 0) || val < std::numeric_limits<float>::min())
+		else if ((std::isinf(val) && val < 0) || val < -std::numeric_limits<float>::max())
 			std::cout << "-inf";
 		else
 			std::cout << static_cast<float>(val);

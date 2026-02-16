@@ -17,7 +17,7 @@
 
 int main()
 {
-	Data* data = new Data();
+	Data* data = new Data;
 	data->valI = 124;
 	data->valC = 'a';
 	data->valStr.append("hello");
@@ -26,7 +26,6 @@ int main()
 	std::cout << "DATA (before)\nint= " << data->valI << "\nchar= '" << data->valC << "'\nstr= \"" <<
 				data->valStr << "\"\nfloat= " << data->valF << std::endl;
 
-				
 	data = Serializer::deserialize(Serializer::serialize(data));
 
 	std::cout << "DATA (after)\nint= " << data->valI << "\nchar= '" << data->valC << "'\nstr= \"" <<

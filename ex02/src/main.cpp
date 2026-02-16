@@ -48,25 +48,20 @@ Base*	generate()
 			base = new C();
 			// std::cout << "new C" << std::endl;
 			break ;
-		// default:
-		// 	base = 0;
-		// 	std::cout << "Nothing\n";
+		default:
+			base = 0;
+			// std::cout << "Nothing\n";
 	}
 	return (base);
 }
 
 void	identify(Base* p)
 {
-	A* a = dynamic_cast<A*>(p);
-	if (a != 0)
+	if (dynamic_cast<A*>(p))
 		std::cout << "A";
-
-	B* b = dynamic_cast<B*>(p);
-	if (b != 0)
+	else if (dynamic_cast<B*>(p))
 		std::cout << "B";
-
-	C* c = dynamic_cast<C*>(p);
-	if (c != 0)
+	else if (dynamic_cast<C*>(p))
 		std::cout << "C";
 }
 
@@ -74,7 +69,7 @@ void	identify(Base& p)
 {
 	try
 	{
-		A a = dynamic_cast<A&>(p);
+		dynamic_cast<A&>(p);
 		std::cout << "A";
 	}
 	catch (const std::exception& e)
@@ -84,7 +79,7 @@ void	identify(Base& p)
 
 	try
 	{
-		B b = dynamic_cast<B&>(p);
+		dynamic_cast<B&>(p);
 		std::cout << "B";
 	}
 	catch (const std::exception& e)
@@ -94,7 +89,7 @@ void	identify(Base& p)
 
 	try
 	{
-		C c = dynamic_cast<C&>(p);
+		dynamic_cast<C&>(p);
 		std::cout << "C";
 	}
 	catch (const std::exception& e)
@@ -105,7 +100,7 @@ void	identify(Base& p)
 
 int	main()
 {
-	std::srand(time(0));
+	std::srand(std::time(0));
 
 	Base *guess = generate();
 	std::cout << "ptr= ";
