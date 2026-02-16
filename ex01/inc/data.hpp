@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Serializer.cpp                                     :+:      :+:    :+:   */
+/*   data.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlouis <mlouis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/16 09:38:52 by mlouis            #+#    #+#             */
-/*   Updated: 2026/02/16 10:07:13 by mlouis           ###   ########.fr       */
+/*   Created: 2026/02/16 09:38:49 by mlouis            #+#    #+#             */
+/*   Updated: 2026/02/16 09:40:21 by mlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Serializer.hpp"
+#ifndef DATA_HPP
+# define DATA_HPP
 
-uintptr_t	Serializer::serialize(Data* ptr)
-{
-	return (reinterpret_cast<uintptr_t>(ptr));
-}
+# include <string>
 
-Data*	Serializer::deserialize(uintptr_t raw)
+struct Data
 {
-	return (reinterpret_cast<Data *>(raw));
-}
+	int			valI;
+	char		valC;
+	std::string	valStr;
+	float		valF;
+};
+
+#endif

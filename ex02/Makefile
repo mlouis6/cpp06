@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: mlouis <mlouis@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2026/02/10 17:03:19 by mlouis            #+#    #+#              #
-#    Updated: 2026/02/16 11:50:51 by mlouis           ###   ########.fr        #
+#    Created: 2026/02/16 10:36:06 by mlouis            #+#    #+#              #
+#    Updated: 2026/02/16 11:49:52 by mlouis           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,17 +16,18 @@ NAME := cast.out
 
 CL_DIR := class/
 SRCS_DIR := src/
+INCS_DIR := inc/
 OBJS_DIR := .build/
 
-SCALAR_DIR := $(addprefix $(CL_DIR), scalar/)
-SCALAR_CL := ScalarConverter.cpp
+GEN_DIR := $(addprefix $(CL_DIR), generic/)
+GEN_CL := Base.cpp
 
-P_SCALAR := $(addprefix $(SCALAR_DIR), $(SCALAR_CL))
+P_GEN := $(addprefix $(GEN_DIR), $(GEN_CL))
 
 P_MAIN := $(addprefix $(SRCS_DIR), main.cpp)
 
-SRCS := $(P_SCALAR) $(P_MAIN)
-INCS := $(SCALAR_DIR)
+SRCS := $(P_GEN) $(P_MAIN)
+INCS := $(GEN_DIR) $(INCS_DIR)
 OBJS := $(addprefix $(OBJS_DIR), $(SRCS:%.cpp=%.o))
 DEPS := $(OBJS:.o=.d)
 

@@ -6,7 +6,7 @@
 /*   By: mlouis <mlouis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 17:06:35 by mlouis            #+#    #+#             */
-/*   Updated: 2026/02/13 15:02:31 by mlouis           ###   ########.fr       */
+/*   Updated: 2026/02/16 09:36:33 by mlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,6 @@ namespace print
 		std::cout << "int: " << static_cast<int>(val) << std::endl;
 		std::cout << "float: " << static_cast<float>(val) << ".0f" << std::endl;
 		std::cout << "double: " << static_cast<double>(val) << ".0" << std::endl;
-
 	}
 
 	void	fromInt(const long long val, std::istringstream& iss)

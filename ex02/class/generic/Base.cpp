@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Serializer.cpp                                     :+:      :+:    :+:   */
+/*   Base.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlouis <mlouis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/16 09:38:52 by mlouis            #+#    #+#             */
-/*   Updated: 2026/02/16 10:07:13 by mlouis           ###   ########.fr       */
+/*   Created: 2026/02/16 10:40:38 by mlouis            #+#    #+#             */
+/*   Updated: 2026/02/16 10:40:59 by mlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Serializer.hpp"
+#include "Base.hpp"
 
-uintptr_t	Serializer::serialize(Data* ptr)
+Base::~Base()
 {
-	return (reinterpret_cast<uintptr_t>(ptr));
-}
-
-Data*	Serializer::deserialize(uintptr_t raw)
-{
-	return (reinterpret_cast<Data *>(raw));
+	
 }

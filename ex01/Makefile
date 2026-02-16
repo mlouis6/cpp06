@@ -4,6 +4,7 @@ NAME := cast.out
 
 CL_DIR := class/
 SRCS_DIR := src/
+INCS_DIR := inc/
 OBJS_DIR := .build/
 
 SERIAL_DIR := $(addprefix $(CL_DIR), serializer/)
@@ -14,9 +15,9 @@ P_SERIAL := $(addprefix $(SERIAL_DIR), $(SERIAL_CL))
 P_MAIN := $(addprefix $(SRCS_DIR), main.cpp)
 
 SRCS := $(P_SERIAL) $(P_MAIN)
-INCS := $(SERIAL_DIR)
+INCS := $(SERIAL_DIR) $(INCS_DIR)
 OBJS := $(addprefix $(OBJS_DIR), $(SRCS:%.cpp=%.o))
-DEPS := $(addprefix $(OBJS_DIR), $(OBJS:.o=.d))
+DEPS := $(OBJS:.o=.d)
 
 CXX := c++
 CXXFLAGS := -Wall -Wextra -Werror -std=c++98

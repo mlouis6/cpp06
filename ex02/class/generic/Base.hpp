@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Serializer.cpp                                     :+:      :+:    :+:   */
+/*   Base.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mlouis <mlouis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/16 09:38:52 by mlouis            #+#    #+#             */
-/*   Updated: 2026/02/16 10:07:13 by mlouis           ###   ########.fr       */
+/*   Created: 2026/02/16 10:37:35 by mlouis            #+#    #+#             */
+/*   Updated: 2026/02/16 10:43:40 by mlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Serializer.hpp"
+#ifndef BASE_HPP
+# define BASE_HPP
 
-uintptr_t	Serializer::serialize(Data* ptr)
+class Base
 {
-	return (reinterpret_cast<uintptr_t>(ptr));
-}
+	public:
+		virtual ~Base();
+};
 
-Data*	Serializer::deserialize(uintptr_t raw)
-{
-	return (reinterpret_cast<Data *>(raw));
-}
+#endif
