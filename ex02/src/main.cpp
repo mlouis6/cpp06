@@ -6,7 +6,7 @@
 /*   By: mlouis <mlouis@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 10:36:35 by mlouis            #+#    #+#             */
-/*   Updated: 2026/02/16 11:48:18 by mlouis           ###   ########.fr       */
+/*   Updated: 2026/02/18 12:59:34 by mlouis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ void	identify(Base& p)
 {
 	try
 	{
-		dynamic_cast<A&>(p);
+		A a = dynamic_cast<A&>(p);
+		static_cast<void>(a);
 		std::cout << "A";
 	}
 	catch (const std::exception& e)
@@ -79,7 +80,8 @@ void	identify(Base& p)
 
 	try
 	{
-		dynamic_cast<B&>(p);
+		B b = dynamic_cast<B&>(p);
+		static_cast<void>(b);
 		std::cout << "B";
 	}
 	catch (const std::exception& e)
@@ -89,7 +91,8 @@ void	identify(Base& p)
 
 	try
 	{
-		dynamic_cast<C&>(p);
+		C c = dynamic_cast<C&>(p);
+		static_cast<void>(c);
 		std::cout << "C";
 	}
 	catch (const std::exception& e)
